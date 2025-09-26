@@ -1,52 +1,52 @@
-# Short URL - URL Shortener
+# Short URL - Simple URL Shortener
 
-A simple Flask web app that makes long URLs short and trackable. Built as a learning project to practice web development, databases, and containerization.
+A minimal Flask web app that turns long URLs into short ones. Built for simplicity and easy AWS deployment using Terraform.
 
 ## What it does
 
-This app takes a long URL (like `https://www.example.com/very/long/url/with/lots/of/parameters`) and creates a short version (like `http://localhost:5000/abc123`). When someone clicks the short link, it redirects them to the original URL and tracks the click.
+This app takes a long URL and creates a short version. When someone clicks the short link, it redirects them to the original URL.
 
-## Cool features
+**Live Demo**: Currently deployed on AWS EC2 at `http://13.127.196.78:5000`
 
-- Turn long URLs into short ones
-- Track how many times links are clicked
-- Set links to expire after a certain time
-- Nice web interface that works on phones
-- REST API for developers
-- Prevent spam with rate limiting
-- Works with Docker and Kubernetes
+## Features
+
+- ✅ Simple URL shortening with just one input box
+- ✅ In-memory storage (no database setup needed)
+- ✅ Automatic redirect to original URLs
+- ✅ One-command AWS deployment with Terraform
+- ✅ Minimal resource usage (perfect for t3.micro free tier)
 
 ## What I learned building this
 
-- **Flask web development**: Building web apps with Python
-- **Database design**: Creating tables and relationships with SQLite
-- **Frontend skills**: HTML, CSS, and JavaScript
-- **Containerization**: Docker and Docker Compose
-- **Kubernetes**: Container orchestration and scaling
-- **API design**: Creating REST endpoints
-- **Testing**: Writing tests with pytest
+- **Flask web development**: Simple Python web apps
+- **AWS EC2 deployment**: Running apps in the cloud
+- **Infrastructure as Code**: Using Terraform for AWS resources
+- **User-data scripting**: Automated server setup
+- **Security groups**: AWS firewall configuration
 
-## What's inside
+## Quick Start
 
-**Backend:**
-- Python 3.11 and Flask for the web server
-- SQLite database to store URLs and clicks
-- Redis for caching (optional)
+### 🚀 AWS Deployment (Recommended)
 
-**Frontend:**
-- HTML, CSS, and JavaScript
-- Responsive design that works on mobile
-- Copy-to-clipboard functionality
+Deploy to AWS EC2 in one command:
 
-**DevOps stuff:**
-- Docker for containerization
-- Kubernetes for orchestration
-- pytest for testing
-- Logging and monitoring
+```powershell
+# Load AWS credentials and deploy
+.\deploy.ps1
+```
 
-## How to run it
+**What you get:**
+- Single EC2 instance (t3.micro - free tier eligible)
+- Security group with HTTP access on port 5000
+- SSH access for troubleshooting
+- Estimated cost: ~$8-12/month (free with AWS free tier)
 
-### The easy way (local development)
+**Prerequisites:**
+- AWS CLI configured (`aws configure`)
+- Terraform installed
+- Your AWS credentials in `.env` file
+
+### 💻 Local Development
 
 1. **Get the code**:
    ```bash
@@ -54,153 +54,104 @@ This app takes a long URL (like `https://www.example.com/very/long/url/with/lots
    cd short_url
    ```
 
-2. **Set up Python environment**:
+2. **Install Flask**:
    ```bash
-   python -m venv venv
-   
-   # Windows
-   .\venv\Scripts\activate
-   
-   # Mac/Linux
-   source venv/bin/activate
+   pip install Flask
    ```
 
-3. **Install stuff**:
+3. **Run the minimal app**:
    ```bash
-   pip install -r requirements.txt
+   # Copy the simple app from terraform/main.tf user_data section
+   python app.py
    ```
 
-4. **Run it**:
-   ```bash
-   python main.py
-   ```
-
-5. **Open your browser**: Go to http://localhost:5000
-
-### With Docker (if you want to be fancy)
-
-```bash
-docker-compose up --build
-```
-
-### With Kubernetes (if you really want to show off)
-
-```bash
-# Windows
-.\setup-minikube.ps1
-
-# Mac/Linux
-./setup-minikube.sh
-```
+4. **Open your browser**: Go to http://localhost:5000
 
 
 
-## How to use the API
+## How to use it
 
-You can also use this programmatically instead of the web interface:
+1. **Visit the app** in your browser (locally at http://localhost:5000 or your AWS deployment URL)
+2. **Enter a URL** in the input box
+3. **Click "Shorten"** to get your short URL
+4. **Use the short URL** anywhere - it will redirect to your original URL
 
-### Make a short URL
-```bash
-curl -X POST http://localhost:5000/shorten \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://www.google.com", "expires_hours": 24}'
-```
+## How it works
 
-### Get stats about a URL
-```bash
-curl http://localhost:5000/stats/abc123
-```
-
-### See all URLs
-```bash
-curl http://localhost:5000/api/urls
-```
+The app creates a simple form with one input box. When you submit a URL:
+1. It generates a random 4-character code
+2. Stores the mapping in memory (dictionary)
+3. Returns a short URL using that code
+4. When someone visits the short URL, it redirects to the original
 
 ## Project structure
 
 ```
 short_url/
-├── db/                    # Database stuff
-│   ├── models.py         # Database tables and operations
-│   └── queries.py        # Database queries
-├── handlers/
-│   └── routes.py         # All the web routes (URLs the app responds to)
-├── middlewares/
-│   ├── logger.py         # Logging
-│   └── rate_limiter.py   # Prevents spam
-├── web/                  # HTML templates
-│   ├── index.html        # Home page
-│   ├── shorturl.html     # Create short URL page
-│   └── (error pages)
-├── main.py               # Starts the app
-├── requirements.txt      # Python packages needed
-├── Dockerfile           # For containerization
-├── docker-compose.yml   # Run with Docker
-└── k8s-manifest.yaml    # Kubernetes setup
+├── terraform/            # AWS infrastructure
+│   ├── main.tf          # Terraform configuration
+│   ├── variables.tf     # Input variables
+│   └── outputs.tf       # Output values
+├── .env                 # AWS credentials (not in git)
+├── deploy.ps1           # One-command deployment script
+├── main.py              # Original Flask app (not used in deployment)
+├── handlers/            # Original code structure (not used in deployment)
+├── web/                 # Original templates (not used in deployment)
+└── README.md            # This file
 ```
 
+**Note**: The deployed version uses a minimal inline Flask app defined in the Terraform `user_data` section for simplicity and to avoid AWS user-data size limits.
 
 
-## If something breaks
 
-### App won't start
+## Troubleshooting
+
+### App not accessible
+- Check the security group allows traffic on port 5000
+- Verify the EC2 instance is running: `terraform show`
+- Check the user-data script ran: SSH into the instance and check logs
+
+### Deployment fails
+```powershell
+# Check AWS credentials
+aws sts get-caller-identity
+
+# Check Terraform state
+cd terraform
+terraform plan
+
+# Destroy and recreate if needed
+terraform destroy -auto-approve
+terraform apply -auto-approve
+```
+
+### SSH into the server
 ```bash
-# Check if Python is working
-python --version
+# Use the SSH command from terraform output
+ssh -i ~/.ssh/id_rsa ec2-user@<your-server-ip>
 
-# Make sure packages are installed
-pip list
-
-# Look at the error logs
-python main.py
+# Check if the app is running
+ps aux | grep python
+netstat -tulpn | grep 5000
 ```
 
-### Docker issues
-```bash
-# See what containers are running
-docker ps
+## Technical Details
 
-# Check the logs
-docker logs short-url-app
-```
-
-### Kubernetes issues
-```bash
-# See if pods are running
-kubectl get pods -n short-url
-
-# Check what went wrong
-kubectl describe pod <pod-name> -n short-url
-```
-
-## Cool things to try
-
-Once you have it running, you can:
-
-1. **Create some short URLs** through the web interface
-2. **Test the API** with curl commands
-3. **Check the database** to see how data is stored:
-   ```bash
-   sqlite3 urls.db
-   .tables
-   SELECT * FROM urls;
-   ```
-4. **Look at the logs** to see what's happening:
-   ```bash
-   tail -f logs/short_url_*.log
-   ```
-5. **Try the Docker version** to learn containerization
-6. **Deploy to Kubernetes** if you want to learn orchestration
+- **Runtime**: Python 3 with Flask
+- **Storage**: In-memory dictionary (resets on server restart)
+- **Server**: Single EC2 t3.micro instance
+- **Security**: AWS Security Group allows HTTP on port 5000 and SSH on port 22
+- **Region**: ap-south-1 (Mumbai) - change in `terraform/variables.tf` if needed
 
 ## What I'd add next
 
-If I had more time, I'd add:
-- User accounts and login
-- Custom short codes (like bit.ly/mycustomlink)
-- QR code generation
-- Better analytics with graphs
-- API rate limiting per user
-- Link preview when sharing
+If I expanded this project, I'd add:
+- Database persistence (SQLite or RDS)
+- Custom short codes
+- Click analytics
+- URL expiration
+- Rate limiting
+- Better UI styling
 
 ## Contributing
 
