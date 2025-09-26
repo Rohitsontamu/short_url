@@ -1,0 +1,89 @@
+# Create a separate space for our app
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: short-url
+---
+# Configuration for our app - like environment variables
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: short-url-config
+  namespace: short-url
+data:
+  FLASK_ENV: "production"
+  DEBUG: "false"
+  HOST: "0.0.0.0"
+  PORT: "5000"
+---
+# Storage for our database - so data doesn't disappear when pod restarts
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: short-url-data
+  namespace: short-url
+spec:
+  accessModes:
+    - ReadWriteOnce  # Only one pod can write to this at a time
+  resources:
+    requests:
+      storage: 1Gi  # 1GB of storage
+
+---
+# Our main app deployment - this runs our Flask app
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: short-url-app
+  namespace: short-url
+spec:
+  replicas: 2  # Run 2 copies of our app for reliability
+  selector:
+    matchLabels:
+      app: short-url-app
+  template:
+    metadata:
+      labels:
+        app: short-url-app
+    spec:
+      containers:
+      - name: short-url-app
+        image: short-url-app:latest
+        imagePullPolicy: Never  # Use local image from Minikube
+        ports:
+        - containerPort: 5000  # Our Flask app runs on port 5000
+        # Get config from the ConfigMap we created above
+        envFrom:
+        - configMapRef:
+            name: short-url-config
+        # Mount storage for database
+        volumeMounts:
+        - name: app-data
+          mountPath: /app/data
+        # Simple health check - ping our app
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 30  # Wait 30 seconds before first check
+          periodSeconds: 30        # Check every 30 seconds
+      # Connect our storage
+      volumes:
+      - name: app-data
+        persistentVolumeClaim:
+          claimName: short-url-data
+---
+# Service to access our app from outside the cluster
+apiVersion: v1
+kind: Service
+metadata:
+  name: short-url-service
+  namespace: short-url
+spec:
+  type: NodePort  # This lets us access it from outside Minikube
+  selector:
+    app: short-url-app  # Connect to our app pods
+  ports:
+  - port: 5000          # Port inside the cluster
+    targetPort: 5000    # Port our app container listens on
+    nodePort: 30080     # Port we can access from outside (localhost:30080)

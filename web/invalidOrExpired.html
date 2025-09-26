@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Expired or Not Found - URL Shortener</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .error-icon {
+            font-size: 4em;
+            color: #ffc107;
+            margin-bottom: 20px;
+        }
+        
+        .error-title {
+            font-size: 2em;
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 15px;
+        }
+        
+        .error-message {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .error-details {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .error-details h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .reason-list {
+            text-align: left;
+            color: #856404;
+            line-height: 1.6;
+        }
+        
+        .reason-list li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            background: #ffeaa7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .info-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .info-section h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .info-section p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        .clock-icon {
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .error-title {
+                font-size: 1.5em;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-icon">⏰</div>
+        <h1 class="error-title">Link Expired or Not Found</h1>
+        <p class="error-message">
+            Sorry, the short URL you're looking for is no longer available.
+        </p>
+        
+        <div class="error-details">
+            <h3>This could happen for several reasons:</h3>
+            <ul class="reason-list">
+                <li><span class="clock-icon">⏰</span> The link has <span class="highlight">expired</span> based on its set expiration time</li>
+                <li><span class="clock-icon">🔍</span> The short URL code was <span class="highlight">mistyped</span> or is incorrect</li>
+                <li><span class="clock-icon">🗑️</span> The link was <span class="highlight">removed</span> or deactivated by the creator</li>
+                <li><span class="clock-icon">📅</span> The link was created with a <span class="highlight">temporary expiration</span> period</li>
+            </ul>
+        </div>
+        
+        <div class="actions">
+            <a href="/shorten" class="btn btn-primary">Create New Short URL</a>
+            <a href="/" class="btn btn-secondary">Go Home</a>
+        </div>
+        
+        <div class="info-section">
+            <h4>About Link Expiration</h4>
+            <p>
+                Short URLs can be created with expiration times ranging from 1 hour to 1 month, 
+                or they can be set to never expire. Once a link expires, it cannot be accessed 
+                and would need to be recreated.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
