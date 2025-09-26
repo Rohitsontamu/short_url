@@ -176,8 +176,7 @@ error.log
 # Performance profiling
 *.prof
 
-# Terraform files - infrastructure state and secrets
-terraform/
+# Terraform state and runtime files (keep .tf files!)
 .terraform/
 *.tfstate
 *.tfstate.*
@@ -185,10 +184,10 @@ terraform/
 .terraform.lock.hcl
 terraform.tfplan
 terraform.tfplan.json
+crash.log
 
 # AWS and cloud provider files
 .aws/
-*.pem
 credentials
 
 # Environment variables and secrets
