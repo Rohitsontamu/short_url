@@ -70,7 +70,7 @@ services:
     restart: unless-stopped
     profiles:
       - production
-
+  
 volumes:
   redis-data:
     driver: local

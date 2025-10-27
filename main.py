@@ -3,6 +3,7 @@
 from flask import Flask
 from handlers.routes import app
 from middlewares.logger import setup_logger
+import logging
 import os
 
 # Initialize logger
@@ -48,3 +49,6 @@ if __name__ == '__main__':
     except Exception as e:
         logger.error(f"Application error: {str(e)}")
         raise
+
+
+
