@@ -3,6 +3,8 @@ import logging
 import os
 from datetime import datetime
 
+from sympy import false
+
 # --- 1. Import the CORRECT Splunk handler ---
 try:
     from splunk_hec_handler import SplunkHecHandler
@@ -47,8 +49,10 @@ def setup_logger(name: str = 'short_url', log_level: str = 'INFO') -> logging.Lo
 
     # --- 2. Add Splunk HEC Handler ---
     if SPLUNK_AVAILABLE:
-        SPLUNK_HOST = os.getenv('SPLUNK_HOST')
+        SPLUNK_HOST = os.getenv('SPLUNK_HOST') or os.getenv('SPLUNK_HEC_HOST')
         SPLUNK_HEC_TOKEN = os.getenv('SPLUNK_HEC_TOKEN')
+
+
         
         if SPLUNK_HOST and SPLUNK_HEC_TOKEN:
             try:
@@ -56,9 +60,10 @@ def setup_logger(name: str = 'short_url', log_level: str = 'INFO') -> logging.Lo
                     host=SPLUNK_HOST,
                     token=SPLUNK_HEC_TOKEN,
                     port=int(os.getenv('SPLUNK_HEC_PORT', 8088)),
-                    proto=os.getenv('SPLUNK_HEC_PROTO', 'http'),
-                    verify=os.getenv('SPLUNK_HEC_VERIFY_SSL', 'False').lower() == 'true',
+                    proto=os.getenv('SPLUNK_HEC_PROTO', 'https'),
+                    ssl_verify=False,   # ✅ correct param for skipping SSL cert check
                     timeout=5.0
+
                 )
                 
                 splunk_formatter = logging.Formatter('%(levelname)s - %(module)s - %(message)s')
@@ -86,3 +91,4 @@ def log_request(logger: logging.Logger):
         wrapper.__name__ = func.__name__
         return wrapper
     return decorator
+

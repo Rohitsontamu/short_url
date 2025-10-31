@@ -5,9 +5,13 @@ from handlers.routes import app
 from middlewares.logger import setup_logger
 import logging
 import os
+from dotenv import load_dotenv  # ✅ add this
+
+load_dotenv()  # ✅ load .env before reading env vars
 
 # Initialize logger
 logger = setup_logger()
+
 
 def create_app():
     """Create and configure the Flask application"""
