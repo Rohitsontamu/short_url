@@ -3,15 +3,10 @@
 from flask import Flask
 from handlers.routes import app
 from middlewares.logger import setup_logger
-import logging
 import os
-from dotenv import load_dotenv  # ✅ add this
-
-load_dotenv()  # ✅ load .env before reading env vars
 
 # Initialize logger
 logger = setup_logger()
-
 
 def create_app():
     """Create and configure the Flask application"""
@@ -27,9 +22,11 @@ def create_app():
     
     return app
 
+# Create the application at module level for Gunicorn
+application = create_app()
+
 if __name__ == '__main__':
-    # Create the application
-    application = create_app()
+    # Use the application we already created
     
     # Get configuration from environment variables
     debug_mode = os.getenv('DEBUG', 'True').lower() == 'true'
@@ -51,6 +48,3 @@ if __name__ == '__main__':
     except Exception as e:
         logger.error(f"Application error: {str(e)}")
         raise
-
-
-

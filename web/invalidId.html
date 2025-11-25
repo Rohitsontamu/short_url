@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invalid Short URL - URL Shortener</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .error-icon {
+            font-size: 4em;
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        
+        .error-title {
+            font-size: 2em;
+            font-weight: bold;
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+        
+        .error-message {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .error-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .error-details h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .error-details p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .short-code-example {
+            background: #e8f4fd;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: #0066cc;
+            margin-top: 10px;
+            border: 1px solid #bee5eb;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .help-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .help-section h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .help-section p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .error-title {
+                font-size: 1.5em;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-icon">🔍</div>
+        <h1 class="error-title">Invalid Short URL</h1>
+        <p class="error-message">
+            The short URL code you're looking for doesn't exist or is invalid.
+        </p>
+        
+        <div class="error-details">
+            <h3>What this means:</h3>
+            <p>Short URL codes must be exactly 6 characters long and contain only letters and numbers.</p>
+            <p>The code you entered doesn't match this format or doesn't exist in our database.</p>
+            
+            <div class="short-code-example">
+                <strong>Valid format:</strong> abc123 (6 characters, letters and numbers only)
+            </div>
+        </div>
+        
+        <div class="actions">
+            <a href="/shorten" class="btn btn-primary">Create New Short URL</a>
+            <a href="/" class="btn btn-secondary">Go Home</a>
+        </div>
+        
+        <div class="help-section">
+            <h4>Need Help?</h4>
+            <p>
+                If you believe this is an error or you're having trouble with a short URL, 
+                please double-check the code you entered. Short URL codes are case-sensitive 
+                and must be entered exactly as provided.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

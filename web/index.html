@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short URL - URL Shortener</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .feature h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .feature p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .stats {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        
+        .stats h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .logo {
+                font-size: 2em;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🔗 Short URL</div>
+        <p class="subtitle">Transform long URLs into short, shareable links</p>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast & Reliable</h3>
+                <p>Lightning-fast redirects with 99.9% uptime</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3>Click Analytics</h3>
+                <p>Track clicks and monitor your link performance</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">⏰</div>
+                <h3>Expiration Control</h3>
+                <p>Set custom expiration times for your links</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure</h3>
+                <p>Safe and secure URL shortening with rate limiting</p>
+            </div>
+        </div>
+        
+        <a href="/shorten" class="cta-button">Create Short URL</a>
+        
+        <div class="stats">
+            <h3>Service Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">URLs Shortened</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Availability</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number"><1s</span>
+                    <span class="stat-label">Response Time</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

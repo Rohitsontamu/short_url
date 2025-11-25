@@ -1,0 +1,126 @@
+# Git stuff - don't need version control inside container
+.git
+.gitignore
+.gitattributes
+
+# Documentation - not needed in container
+README.md
+*.md
+LICENSE
+docs/
+
+# Python cache and build files - Docker will create its own
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments - Docker creates its own Python environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.virtualenv
+
+# IDE and editor files - personal development stuff
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Testing files - not needed in production container
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Development database - container will create its own
+*.db
+*.sqlite
+*.sqlite3
+urls.db
+
+# Development logs - container will create its own
+logs/
+*.log
+
+# Docker files - don't put Docker files inside Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Development tools config
+.flake8
+.black
+setup.cfg
+pyproject.toml
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+
+# Node.js stuff (if you add it later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local environment files - container gets its own
+.env.local
+.env.development
+.env.test
+
+# SSL certificates (development ones)
+*.pem
+*.key
+*.crt
+*.cert
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Kubernetes setup files - not needed in container
+k8s-manifest.yaml
+setup-minikube.sh
+setup-minikube.ps1
+K8S_DEPLOYMENT.md

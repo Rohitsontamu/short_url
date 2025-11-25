@@ -56,7 +56,6 @@ spec:
         envFrom:
         - configMapRef:
             name: short-url-config
-
         # Mount storage for database
         volumeMounts:
         - name: app-data
