@@ -27,11 +27,9 @@ def create_app():
     
     return app
 
-# Create the application at module level for Gunicorn
-application = create_app()
-
 if __name__ == '__main__':
-    # Use the application we already created
+    # Create the application
+    application = create_app()
     
     # Get configuration from environment variables
     debug_mode = os.getenv('DEBUG', 'True').lower() == 'true'
