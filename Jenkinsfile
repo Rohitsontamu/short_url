@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION     = "ap-south-1"
+        AWS_REGION     = "ap-southeast-2"
         AWS_ACCOUNT_ID = "859867727599"
         ECR_REPO       = "short-url-app"
         IMAGE_URI      = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}"
