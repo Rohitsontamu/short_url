@@ -53,7 +53,7 @@ pipeline {
             steps {
                 sshagent(['app-ec2-ssh-key']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ec2-user@${APP_EC2_IP} '
+                        ssh -o StrictHostKeyChecking=no ubuntu@${APP_EC2_IP} '
                             aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
                             docker pull ${IMAGE_URI}:${IMAGE_TAG}
                             docker stop short-url-app || true
