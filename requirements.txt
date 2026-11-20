@@ -30,3 +30,6 @@ flake8==6.1.0
 
 # Production server (optional)
 gunicorn==21.2.0
+
+# Splunk HEC integration (if needed)
+splunk-hec-handler

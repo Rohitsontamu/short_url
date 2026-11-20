@@ -4,6 +4,14 @@ import logging
 import os
 from datetime import datetime
 
+# --- 1. Import the CORRECT Splunk handler ---
+try:
+    from splunk_hec_handler import SplunkHecHandler
+    SPLUNK_AVAILABLE = True
+except ImportError:
+    SPLUNK_AVAILABLE = False
+    print("splunk-hec-handler package not found. Skipping Splunk integration.")
+
 
 def setup_logger(name: str = 'short_url', log_level: str = 'INFO') -> logging.Logger:
     """Setup and configure logger"""
@@ -43,7 +51,38 @@ def setup_logger(name: str = 'short_url', log_level: str = 'INFO') -> logging.Lo
     # Add handlers to logger
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
-    
+
+    # --- 2. Add Splunk HEC Handler ---
+    if SPLUNK_AVAILABLE:
+        SPLUNK_HOST = os.getenv('SPLUNK_HOST') or os.getenv('SPLUNK_HEC_HOST')
+        SPLUNK_HEC_TOKEN = os.getenv('SPLUNK_HEC_TOKEN')
+
+
+        
+        if SPLUNK_HOST and SPLUNK_HEC_TOKEN:
+            try:
+                splunk_handler = SplunkHecHandler(
+                    host=SPLUNK_HOST,
+                    token=SPLUNK_HEC_TOKEN,
+                    port=int(os.getenv('SPLUNK_HEC_PORT', 8088)),
+                    proto=os.getenv('SPLUNK_HEC_PROTO', 'https'),
+                    ssl_verify=False,   # ✅ correct param for skipping SSL cert check
+                    timeout=5.0
+
+                )
+                
+                splunk_formatter = logging.Formatter('%(levelname)s - %(module)s - %(message)s')
+                splunk_handler.setFormatter(splunk_formatter)
+                splunk_handler.setLevel(logging.INFO)
+                
+                logger.addHandler(splunk_handler)
+                logger.info("Splunk HEC logger successfully initialized.")
+                
+            except Exception as e:
+                logger.error(f"Failed to initialize Splunk HEC handler: {str(e)}")
+        else:
+            logger.info("Splunk HEC environment variables not set. Skipping Splunk.")
+
     return logger
 
 
