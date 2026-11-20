@@ -58,7 +58,7 @@ pipeline {
                             docker pull ${IMAGE_URI}:${IMAGE_TAG}
                             docker stop short-url-app || true
                             docker rm short-url-app || true
-                            docker run -d --name short-url-app --restart unless-stopped -p 5000:5000 -v /home/ec2-user/data:/app/data ${IMAGE_URI}:${IMAGE_TAG}
+                            docker run -d --name short-url-app --restart unless-stopped -p 5000:5000 -v /home/ubuntu/data:/app/data ${IMAGE_URI}:${IMAGE_TAG}
                         '
                     """
                 }
