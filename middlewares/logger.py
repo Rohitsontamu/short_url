@@ -4,6 +4,8 @@ import logging
 import os
 from datetime import datetime
 
+from sympy import false
+
 # --- 1. Import the CORRECT Splunk handler ---
 try:
     from splunk_hec_handler import SplunkHecHandler
